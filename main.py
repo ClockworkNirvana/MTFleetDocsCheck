@@ -26,7 +26,6 @@ with open(tripsFile, 'r') as f:
         toAdd.build_trip(row)
         data.append(toAdd)
 
-
 for event in data:
-    if event.purpose.upper() in ['JIT', 'BOS', 'AOS', 'AHS']:
-        time_test(event)
+    time_test(event)
+    tooLong_test(event)
