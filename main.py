@@ -29,3 +29,8 @@ with open(tripsFile, 'r') as f:
 for event in data:
     time_test(event)
     tooLong_test(event)
+    A5_test(event)
+    beforeAfter_test(event)
+    WPT_test(event)
+    MPT_test(event)
+    speed_test(event)
