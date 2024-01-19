@@ -243,6 +243,7 @@ poetry.lock
 pyproject.toml
 .pythonlibs
 replit.nix
+.local
 
 #proj specific
 *.csv
