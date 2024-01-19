@@ -13,6 +13,9 @@ def meter_test(event: Rawdata):
 def ipsfBos_test(event: Rawdata):
     pass
 
+def ipsfAos_test(event: Rawdata):
+    pass
+    
 def matching_test(event: Rawdata):
     pass
 
