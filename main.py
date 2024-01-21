@@ -31,7 +31,7 @@ with open(tripsFile, 'r') as f:
         toAdd = Rawdata()
         toAdd.build_trip(row)
         data.append(toAdd)
-        
+
 #del old data
 data = [x for x in data if start <= x.timeStart.date() <= end]
 
@@ -42,23 +42,25 @@ data.sort(key=lambda x: x.timeStart)
 days = {}
 for event in data:
     days.setdefault(event.timeStart.toordinal(), []).append(event)
-days = [days.get(day, []) for day in range(min(days), max(days)+1)]
+days = [days.get(day, []) for day in range(min(days), max(days) + 1)]
 days = [x for x in days if x is not []]
 
-AROS = [59301,59260,59217,59133,59412,59087,59232,59022,59038]
-OUV = [34397,34398,34399]
+AROS = [59301, 59260, 59217, 59133, 59412, 59087, 59232, 59022, 59038]
+OUV = [34397, 34398, 34399]
 
 #daily checks
 for day in days:
-    morn_BOS = {x:False for x in AROS}
-    night_AOS = {x:False for x in AROS}
-    counter = {x:[False, False] for x in AROS+OUV}
+    morn_BOS = {x: False for x in AROS}
+    night_AOS = {x: False for x in AROS}
+    counter = {x: [False, False] for x in AROS + OUV}
     for event in day:
         if event.purpose == 'BOS':
-            counter[int(event.vehicle)] = [True, counter[int(event.vehicle)][1]]
+            counter[int(
+                event.vehicle)] = [True, counter[int(event.vehicle)][1]]
         elif event.purpose == 'AOS':
-            counter[int(event.vehicle)] = [counter[int(event.vehicle)][0], True]
-            
+            counter[int(
+                event.vehicle)] = [counter[int(event.vehicle)][0], True]
+
         time_test(event)
         tooLong_test(event)
         A5_test(event)
@@ -70,10 +72,11 @@ for day in days:
         # for IPSF veh
         if int(event.vehicle) in AROS:
             morn_BOS, counter = ipsfBos_test(event, morn_BOS, counter)
-            night_AOS, counter = ipsfAos_test(event, night_AOS, morn_BOS, counter)
-            
+            night_AOS, counter = ipsfAos_test(event, night_AOS, morn_BOS,
+                                              counter)
+
     matching_test(counter, day[0].timeStart.date())
-        
+
 #    chronoCheckVehicle_test(event)
 #    chronoCheckDriver_test(event)
 #    meter_test(event)
