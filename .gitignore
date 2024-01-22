@@ -244,6 +244,7 @@ pyproject.toml
 .pythonlibs
 replit.nix
 .local
+.breakpoints
 
 #proj specific
 *.csv
