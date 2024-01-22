@@ -1,11 +1,15 @@
 from datetime import timedelta, time
 from dataclass import Rawdata
     
-def chronoCheckVehicle_test(event: Rawdata):
-    pass
+def chronoCheckVehicle_test(event: Rawdata, prev):
+    if prev is not None and event.timeStart < prev.timeEnd:
+            print('Error in {}, vehicle overlap with {}'.format(
+                event.id, prev.id))
 
-def chronoCheckDriver_test(event: Rawdata):
-    pass
+def chronoCheckDriver_test(event: Rawdata, prev):
+    if prev is not None and event.timeStart < prev.timeEnd:
+            print('Error in {}, personel overlap with {}'.format(
+                event.id, prev.id))
 
 def meter_test(event: Rawdata):
     pass
@@ -30,17 +34,19 @@ def ipsfAos_test(event: Rawdata, AOS: dict[int, bool],
                 print('Error in {}, PM IPSF performed twice for {}'.format(
                     event.id, event.vehicle))
         else:
-            print('Possible error in {}, AOS performed for {} after 7pm when no BOS done'
+            print('Possible error in {}, AOS performed for {} after 7pm when no AM IPSF BOS done'
                   .format(event.id, event.vehicle))
         counter[int(event.vehicle)] = [counter[int(event.vehicle)][0], True]
     return AOS, counter
     
-def matching_test(counter: dict[int, list[bool]], day):
+def matching_test(counter: dict[int, list[bool]], day, prev):
     for veh, outstanding in counter.items():
         match outstanding:
             case [True, False]:
-                print('Error on {}, AOS not performed for {}'.format(
-                    day.isoformat(), veh))
+                consider = prev[int(veh)]
+                if consider.purpose != 'WPT' and consider.driver != 'Prem':
+                    print('Error on {}, AOS not performed for {}'.format(
+                        day.isoformat(), veh))
             case [False, True]:
                 print('Error on {}, BOS not performed for {}'.format(
                     day.isoformat(), veh))

@@ -1,11 +1,13 @@
 import csv
+from collections import defaultdict
+from datetime import date
 from dataclass import Rawdata
 from tests import *
-from datetime import date
+
 
 #edit these only
-servicingFile = "download-13_24_56.csv"
-tripsFile = "download-13_24_49.csv"
+servicingFile = "download-02_30_15.csv"
+tripsFile = "download-02_30_20.csv"
 start = date(2024, 1, 15)
 end = date(2024, 1, 19)
 
@@ -38,6 +40,13 @@ data = [x for x in data if start <= x.timeStart.date() <= end]
 # sort data
 data.sort(key=lambda x: x.timeStart)
 
+#uncomment to save data
+#with open("data.csv", "w") as stream:
+#    writer = csv.writer(stream)
+#    for event in data:
+#        row = vars(event)
+#        writer.writerow(row.values())
+        
 #split data into days
 days = {}
 for event in data:
@@ -53,6 +62,8 @@ for day in days:
     morn_BOS = {x: False for x in AROS}
     night_AOS = {x: False for x in AROS}
     counter = {x: [False, False] for x in AROS + OUV}
+    prev_veh = prev_dv = defaultdict(lambda: None)
+    
     for event in day:
         if event.purpose == 'BOS':
             counter[int(
@@ -74,9 +85,10 @@ for day in days:
             morn_BOS, counter = ipsfBos_test(event, morn_BOS, counter)
             night_AOS, counter = ipsfAos_test(event, night_AOS, morn_BOS,
                                               counter)
+        chronoCheckVehicle_test(event, prev_veh[int(event.vehicle)])
+        chronoCheckDriver_test(event, prev_dv[event.driver])
+        prev_veh[int(event.vehicle)] = event
+        prev_dv[event.driver] = event
+    matching_test(counter, day[0].timeStart.date(), prev_veh)
 
-    matching_test(counter, day[0].timeStart.date())
-
-#    chronoCheckVehicle_test(event)
-#    chronoCheckDriver_test(event)
 #    meter_test(event)
