@@ -1,6 +1,8 @@
-from datetime import timedelta, time
+from datetime import time, timedelta
+
 from dataclass import Rawdata
-    
+
+
 def chronoCheckVehicle_test(event: Rawdata, prev):
     if prev is not None and event.timeStart < prev.timeEnd:
             print('Error in {}, vehicle overlap with {}'.format(
@@ -11,8 +13,17 @@ def chronoCheckDriver_test(event: Rawdata, prev):
             print('Error in {}, personel overlap with {}'.format(
                 event.id, prev.id))
 
-def meter_test(event: Rawdata):
-    pass
+def meter_test(event: Rawdata, prev):
+    if prev is not None:
+        if hasattr(event, 'mileageStart'):
+            if event.mileageStart != prev.mileageEnd:
+                print('Error in {}, mileage at start of {} different from end of {}'.format(
+                    event.id, event.purpose, prev.id))
+            
+        else:
+            if int(event.mileageEnd)-int(event.dist) != int(prev.mileageEnd):
+                print('Error in {}, mileage at start of {} different from end of {}'.format(
+                    event.id, event.purpose, prev.id))
 
 def ipsfBos_test(event: Rawdata, BOS: dict[int, bool], counter: dict[int, list[bool]]):
     if event.purpose == 'BOS' and event.timeStart.time() < time(7, 0):

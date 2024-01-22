@@ -87,8 +87,7 @@ for day in days:
                                               counter)
         chronoCheckVehicle_test(event, prev_veh[int(event.vehicle)])
         chronoCheckDriver_test(event, prev_dv[event.driver])
+        meter_test(event, prev_veh[int(event.vehicle)])
         prev_veh[int(event.vehicle)] = event
         prev_dv[event.driver] = event
     matching_test(counter, day[0].timeStart.date(), prev_veh)
-
-#    meter_test(event)
