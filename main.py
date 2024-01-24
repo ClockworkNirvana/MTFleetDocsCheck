@@ -6,10 +6,10 @@ from tests import *
 
 
 #edit these only
-servicingFile = "download-02_30_15.csv"
-tripsFile = "download-02_30_20.csv"
-start = date(2024, 1, 15)
-end = date(2024, 1, 19)
+servicingFile = "download-00_50_32.csv"
+tripsFile = "download-00_50_24.csv"
+start = date(2024, 1, 22)
+end = date(2024, 1, 23)
 
 data = []
 
@@ -80,6 +80,7 @@ for day in days:
         MPT_test(event)
         speed_test(event)
         early_late_test(event)
+        pol_test(event)
         # for IPSF veh
         if int(event.vehicle) in AROS:
             morn_BOS, counter = ipsfBos_test(event, morn_BOS, counter)

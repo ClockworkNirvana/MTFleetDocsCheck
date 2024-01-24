@@ -2,7 +2,11 @@ from datetime import time, timedelta
 
 from dataclass import Rawdata
 
-
+def bosDone_test(event: Rawdata):
+    pass
+def pol_test(event: Rawdata):
+    if event.purpose == 'POL' and int(event.fuelAmount) == 0:
+        print('Error in {}, no fuel topped up at POL'.format(event.id))
 def chronoCheckVehicle_test(event: Rawdata, prev):
     if prev is not None and event.timeStart < prev.timeEnd:
             print('Error in {}, vehicle overlap with {}'.format(
