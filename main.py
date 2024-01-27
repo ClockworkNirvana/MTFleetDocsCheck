@@ -6,10 +6,10 @@ from tests import *
 
 
 #edit these only
-servicingFile = "download-00_50_32.csv"
-tripsFile = "download-00_50_24.csv"
+servicingFile = "download-01_12_06.csv"
+tripsFile = "download-01_11_58.csv"
 start = date(2024, 1, 22)
-end = date(2024, 1, 23)
+end = date(2024, 1, 26)
 
 data = []
 
