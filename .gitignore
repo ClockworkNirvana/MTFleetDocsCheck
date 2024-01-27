@@ -248,3 +248,4 @@ replit.nix
 
 #proj specific
 *.csv
+logs.txt
