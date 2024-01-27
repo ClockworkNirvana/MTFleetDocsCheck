@@ -6,8 +6,8 @@ from tests import *
 
 
 #edit these only
-servicingFile = "download-01_12_06.csv"
-tripsFile = "download-01_11_58.csv"
+servicingFile = "download-02_10_37.csv"
+tripsFile = "download-02_10_41.csv"
 start = date(2024, 1, 22)
 end = date(2024, 1, 26)
 
@@ -67,7 +67,7 @@ for day in days:
     for event in day:
         if event.purpose == 'BOS':
             counter[int(
-                event.vehicle)] = [True, counter[int(event.vehicle)][1]]
+                event.vehicle)] = [True, False]
         elif event.purpose == 'AOS':
             counter[int(
                 event.vehicle)] = [counter[int(event.vehicle)][0], True]
