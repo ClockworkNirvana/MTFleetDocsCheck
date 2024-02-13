@@ -6,10 +6,10 @@ from tests import *
 
 
 #edit these only
-servicingFile = "download-02_10_37.csv"
-tripsFile = "download-02_10_41.csv"
-start = date(2024, 1, 22)
-end = date(2024, 1, 26)
+servicingFile = "download-23_36_14.csv"
+tripsFile = "download-23_35_58.csv"
+start = date(2024, 1, 29)
+end = date(2024, 2, 2)
 
 data = []
 
@@ -86,6 +86,7 @@ for day in days:
             morn_BOS, counter = ipsfBos_test(event, morn_BOS, counter)
             night_AOS, counter = ipsfAos_test(event, night_AOS, morn_BOS,
                                               counter)
+        BOS_done_test(event, counter)
         chronoCheckVehicle_test(event, prev_veh[int(event.vehicle)])
         chronoCheckDriver_test(event, prev_dv[event.driver])
         meter_test(event, prev_veh[int(event.vehicle)])

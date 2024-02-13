@@ -116,3 +116,7 @@ def early_late_test(event: Rawdata):
         print("Error in {}, {} conducted before 6.30am".format(event.id, event.purpose))
     if event.timeEnd.time() > time(19, 30):
         print("Error in {}, {} conducted after 7.30pm".format(event.id, event.purpose))
+
+def BOS_done_test(event: Rawdata, counter: dict[int, list[bool]]):
+    if hasattr(event, 'destination') and counter[int(event.vehicle)] != [True, False]:
+        print("Error in {}, BOS not performed for {}".format(event.id, event.vehicle))
